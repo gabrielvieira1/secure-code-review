@@ -2,98 +2,84 @@
 
 A starter secure code review checklist
 
-- Available in [Xlsx](Secure_Code_Checklist.xlsx) for offline testing
-
 ## Table of Contents
 
-* [Autenticação e Autorização](#Authentication)
-* [Configuration](#Configuration)
-* [Secure Transmission](#Transmission)
-* [Authentication](#Authentication)
-* [Session Management](#Session)
-* [Authorization](#Authorization)
-* [Data Validation](#Validation)
-* [Application Output](#Output)
-* [Cryptography](#Cryptography)
-* [Log Management](#Log)
+- [Autenticação e Autorização](#Authentication)
+- [Data Validation](#Validation)
+- [Memory and Resource Management](#Memory)
+- [File handling](#File)
+- [Secure communication](#Communication)
+- [Cryptography](#Cryptography)
+- [Updates and Fixes](#UpdatesFixes)
+- [Error handling and Log Management](#LogError)
+- [Configuration](#Configuration)
 
-------
-### <a name="Information">Information Gathering</a>
-- [ ] Get a copy of the code
-- [ ] Manually explore the file structure of the code
-- [ ] Look for any missing pieces of code
-- [ ] Check for frameworks / libraries / dependencies
-- [ ] Check for application routes and their inputs
+### <a name="Authentication">Authentication and Authorization</a>
 
-### <a name="Configuration">Configuration</a>
-- [ ] Sensitive data is not hard-coded in configuration files
-- [ ] Develop and test code are properly segregated from production
-- [ ] Dependencies are up to date
-
-### <a name="Transmission">Secure Transmission</a>
-- [ ] Sensitive data is only transmitted over an SSL connection
-- [ ] Site is partitioned into private and public URLs
-- [ ] Sensitive data has been secured in memory, storage and transit
-- [ ] Sensitive data doesn’t leak to non private channels
-
-### <a name="Authentication">Authentication</a>
-- [ ] Assegure-se de que todas as funções críticas do aplicativo sejam protegidas por autenticação.
-- [ ] Verifique se há controle de acesso adequado para diferentes níveis de privilégio de usuário.
-- [ ] Certifique-se de que senhas e credenciais sejam armazenadas de forma segura e não sejam transmitidas em texto simples.
-
-### <a name="Session">Session Management</a>
-- [ ] Establish how session management is handled in the application
-- [ ] Session cookies are encrypted and have a length of at least 128 bits and are complex
-- [ ] Session cookies are not persistent
-- [ ] Session cookies use cookie attributes httponly, secure, samesite
-- [ ] Session tokens are not passed in URLs
-- [ ] Session Cookies expire in a reasonable amount of time
-- [ ] Logout will invalidate the session
-
-### <a name="Authorization">Authorization</a>
+- [ ] Ensure that all critical application functions are protected by authentication.
+- [ ] Make sure there is adequate access control for different user privilege levels.
+- [ ] Make sure passwords and credentials are stored securely and are not transmitted in plain text.
 - [ ] Sensitive transactions require re authentication
 - [ ] Authentication and Authorization checks are done on each private request
 - [ ] Authorization checks are granular, per page / directory / action
 - [ ] Authorization checks are appropriate for each HTTP Verb the application supports
 
-
 ### <a name="Validation">Data Validation</a>
+
 - [ ] All user input is validated for proper type, length, format and range
 - [ ] Validation on user input is done server side
 - [ ] Uploaded files are validated for content type, size, file type and filename
 - [ ] Special characters are sanitized before being used in external systems, like databases
 - [ ] Does invalid input trigger handled exceptions
 
-### <a name="Output">Application Output</a>
-- [ ] All page output is properly encoded
-- [ ] All header output is URL encoded
-- [ ] Cache headers are properly set on sensitive data
-- [ ] Security headers are properly set on the application
-- [ ] Sensitive Application information is not revealed to the user
-- [ ] Error messages don’t reveal sensitive information
-- [ ] Error messages aren't user controllable
+### <a name="Memory">Memory and Resource Management</a>
+
+- [ ] Prevent memory leaks by correctly releasing allocated resources when they are no longer needed.
+- [ ] Make sure there are no invalid references or loose pointers that could be exploited.
+
+### <a name="File">File handling</a>
+
+- [ ] Validate file names and paths to prevent arbitrary file inclusion (path traversal) attacks.
+- [ ] Restrict file and folder access permissions to ensure only necessary operations are allowed.
+
+### <a name="Communication">Secure communication</a>
+
+- [ ] Use proper encryption to secure communication between the app and external services.
+- [ ] Make sure that all network connections, such as HTTP requests, are made over secure channels (HTTPS).
+- [ ] Sensitive data is only transmitted over an SSL connection
+- [ ] Site is partitioned into private and public URLs
+- [ ] Sensitive data has been secured in memory, storage and transit
+- [ ] Sensitive data doesn’t leak to non private channels
 
 ### <a name="Cryptography">Cryptography</a>
+
 - [ ] User passwords are encrypted using a stretching algorithm and uniquely salted
 - [ ] Block ciphers operate in CBC and IV values are not reused
 - [ ] Salts are unique per user, have over 64 bits of secure random data
 - [ ] Check for known bad ciphers (RC4), cryptographic hash functions (MD5) and insecure random number generation
 
-### <a name="Log">Log Management</a>
+### <a name="UpdatesFixes">Updates and Fixes</a>
+
+- [ ] Keep the app up to date with the latest fixes and security patches.
+- [ ] Implement a secure update mechanism to ensure users are using patched versions of the software.
+
+### <a name="LogError">Error handling and Log Management</a>
+
+- [ ] Do not reveal sensitive information in error messages.
+- [ ] Error messages don’t reveal sensitive information
+- [ ] Error messages aren't user controllable
+- [ ] Properly log and monitor errors to detect potential vulnerabilities or exploits.
 - [ ] All sensitive user actions are logged with the following: Where, What, When, Who, How answered
 - [ ] All sensitive system actions are logged with the following: Where, What, When, Who, How answered
 - [ ] Sensitive info is not logged
 - [ ] User input is sanitized and validated before being placed in application logs
 
+### <a name="Configuration">Configuration</a>
 
-#### Sources and References:
+- [ ] Sensitive data is not hard-coded in configuration files
+- [ ] Develop and test code are properly segregated from production
+- [ ] Dependencies are up to date
 
-- [OWASP-Web-Checklist](https://github.com/0xRadi/OWASP-Web-Checklist)
-- [Secure Code Review Checklist](https://arch.simplicable.com/arch/new/secure-code-review-checklist)
-- [softwaresecured](https://github.com/softwaresecured/secure-code-review-checklist)
-- [Code Review Checklist – To Perform Effective Code Reviews](https://www.evoketechnologies.com/blog/code-review-checklist-perform-effective-code-reviews/)
-- [Java Code Review Checklist](https://dzone.com/articles/java-code-review-checklist)
-- [Software Integrity](https://www.synopsys.com/blogs/software-security/code-review-checklist/)
-- [Security Audit Checklist: Code Perspective](https://courses.cs.washington.edu/courses/cse403/10wi/lectures/security_audit_checklist.pdf)
-- [Stop More Bugs with out Code Review Checklist](https://jesseheines.com/~heines/91.462/Resources/CodeReviewChecklists/StopMoreBugsWithOurCodeReviewChecklist_FogCreekBlog_2015-03-23.pdf)
+#### Sources and References
 
+- [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/)
